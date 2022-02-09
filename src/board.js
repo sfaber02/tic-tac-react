@@ -2,21 +2,11 @@ import React from "react";
 
 
 console.log ('reset');
-//generate default board state and intialize variables for new game
-let boardState = [];
-for (let row = 0; row <= 2; row++){
-    boardState.push([]);
-    for (let column = 0; column <= 2; column++){
-        boardState[row].push(0);
-    }
-}
-
-
 
 class Board extends React.Component {
     constructor(props){
         super(props);
-        this.state = {header: 'Reac-Tac-toe', turn: 1, bState: [boardState], msgArea : "X's turn", gameOver : false};
+        this.state = this.initialState();
     }
 
     initialState() {
@@ -25,8 +15,10 @@ class Board extends React.Component {
             boardState.push([]);
             for (let column = 0; column <= 2; column++){
                 boardState[row].push(0);
+                document.getElementById(`${row}${column}`).innerHTML = '';
             }
         }
+        return { header: 'Reac-Tac-toe', turn: 1, bState: [...boardState] , msgArea : "X's turn", gameOver : false };
     }
   
     handleClick(e){
@@ -34,24 +26,26 @@ class Board extends React.Component {
             let x = e.target.id.slice(0,1);
             let y = e.target.id.slice(1);
             let xo;
+            let boardState = [...this.state.bState];
             if (boardState[x][y] == 0) {
                 xo = this.state.turn % 2 == 0 ? [4, 'O'] : [1, 'X'];
                 this.state.turn++;
                 document.getElementById(e.target.id).innerHTML = xo[1];
                 boardState[x][y] = xo[0];
-                this.setState({bState : boardState})
+                this.setState({bState : [...boardState]})
             }
+            this.setState({bState: [...boardState]});
             this.checkWin();
 
             //lil bit of debugging
-            console.log(this.state.bState);
+            //console.log(this.state.bState);
         }
     }
 
     checkWin() {
         //there are 16 possible win conditons 8 for X, 8 for O
         //an x = 1 and o = 4.  therefore a win for x is a row/col/diag that sums 3 and a sum of 12 for O
-
+        let boardState = [...this.state.bState];
         let lineSum = boardState[0][0] + boardState[0][1] + boardState[0][2];
         if (lineSum === 3 || lineSum === 12){
             lineSum === 3 ? document.getElementById('msgArea').innerHTML = 'X WINS' : document.getElementById('msgArea').innerHTML = 'O WINS'
@@ -84,13 +78,26 @@ class Board extends React.Component {
         if (lineSum === 3 || lineSum === 12){
             lineSum === 3 ? document.getElementById('msgArea').innerHTML = 'X WINS' : document.getElementById('msgArea').innerHTML = 'O WINS'
         };
+
         if (document.getElementById('msgArea').innerHTML === 'X WINS' || document.getElementById('msgArea').innerHTML === 'O WINS'){
                 this.setState({ gameOver: true });
-        } 
+        }else{
+            //check if board is full but no one has won
+            // if (this.state.turn >= 10) {
+            //     console.log ("we're in the no win condition")
+            //     this.setState ({ msgArea: 'Nobody wins!', gameOver: true });
+            // }
+        }
+        //this.setState({bState: [...boardState]});
+        console.log ('')
     }
 
     handleReset (e) {
-        console.log('it worked!')
+        this.state = this.initialState();
+        this.setState();
+        console.log(this.state.bState);
+        console.log(this.state.gameOver);
+        console.log(this.state.msgArea);
     }
 
   
@@ -116,13 +123,13 @@ class Board extends React.Component {
                 </tr>
                 </table>
                 <h1 id='msgArea'>{this.state.turn % 2 != 0 ? "X's" : "O's"} turn</h1>
-                {!this.state.gameOver ? <button onClick={e => this.handleReset(e)}>Reset Game</button> : true}
+                <button onClick={e => this.handleReset(e)}>Reset Game</button>
                 <br /><br />
                 <h2>Test Area</h2>
                 <h3>Board State</h3>
                 {this.state.bState}
                 <h3>Turn</h3>
-                {Math.floor(this.state.turn / 2)}
+                {this.state.turn}
             </div>
         );
     }
