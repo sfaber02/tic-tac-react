@@ -2,18 +2,23 @@ import React from "react";
 
 //BABY'S FIRST REACT PROJECT
 
-let initialBoard = [];
-for (let row = 0; row <= 2; row++){
-    initialBoard.push([]);
-    for (let column = 0; column <= 2; column++){
-        initialBoard[row].push(0);
-    }
-}
+
 
 class Board extends React.Component {
     constructor(props){
         super(props);
-        this.state = {turn: 1, bState: [...initialBoard], msgArea: "X's turn", gameOver: false};
+        this.state = {turn: 1, bState: [], msgArea: "X's turn", gameOver: false};
+    }
+
+    componentDidMount() {
+        let initialBoard = [];
+        for (let row = 0; row <= 2; row++) {
+          initialBoard.push([]);
+          for (let column = 0; column <= 2; column++) {
+            initialBoard[row].push(0);
+          }
+        }
+        this.setState({ bState: [...initialBoard] });
     }
 
     resetState() {
@@ -121,12 +126,6 @@ class Board extends React.Component {
                 <div id='thebutton'>
                     <button id='alsobutton' onClick={e => this.handleReset(e)}>Reset Game</button>
                 </div>
-                <br /><br />
-                <h2>Debugging Area</h2>
-                <h3>Board State</h3>
-                {this.state.bState}
-                <h3>Turn</h3>
-                {this.state.turn}
             </div>
         );
     }
