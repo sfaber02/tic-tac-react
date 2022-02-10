@@ -1,15 +1,22 @@
 import React from "react";
 
+//BABY'S FIRST REACT PROJECT
 
-console.log ('reset');
+let initialBoard = [];
+for (let row = 0; row <= 2; row++){
+    initialBoard.push([]);
+    for (let column = 0; column <= 2; column++){
+        initialBoard[row].push(0);
+    }
+}
 
 class Board extends React.Component {
     constructor(props){
         super(props);
-        this.state = this.initialState();
+        this.state = {turn: 1, bState: [...initialBoard], msgArea: "X's turn", gameOver: false};
     }
 
-    initialState() {
+    resetState() {
         let boardState = [];
         for (let row = 0; row <= 2; row++){
             boardState.push([]);
@@ -18,7 +25,7 @@ class Board extends React.Component {
                 document.getElementById(`${row}${column}`).innerHTML = '';
             }
         }
-        return { header: 'Reac-Tac-toe', turn: 1, bState: [...boardState] , msgArea : "X's turn", gameOver : false };
+        return { turn: 1, bState: [...boardState] , msgArea : "X's turn", gameOver : false };
     }
   
     handleClick(e){
@@ -30,15 +37,14 @@ class Board extends React.Component {
             if (boardState[x][y] == 0) {
                 xo = this.state.turn % 2 == 0 ? [4, 'O'] : [1, 'X'];
                 this.state.turn++;
+                let turnString = this.state.turn % 2 ? "X's turn" : "O's turn";
+                this.setState({msgArea: turnString });
                 document.getElementById(e.target.id).innerHTML = xo[1];
                 boardState[x][y] = xo[0];
                 this.setState({bState : [...boardState]})
             }
             this.setState({bState: [...boardState]});
             this.checkWin();
-
-            //lil bit of debugging
-            //console.log(this.state.bState);
         }
     }
 
@@ -48,63 +54,52 @@ class Board extends React.Component {
         let boardState = [...this.state.bState];
         let lineSum = boardState[0][0] + boardState[0][1] + boardState[0][2];
         if (lineSum === 3 || lineSum === 12){
-            lineSum === 3 ? document.getElementById('msgArea').innerHTML = 'X WINS' : document.getElementById('msgArea').innerHTML = 'O WINS'
+            lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
         };
         lineSum = boardState[1][0] + boardState[1][1] + boardState[1][2];
         if (lineSum === 3 || lineSum === 12){
-            lineSum === 3 ? document.getElementById('msgArea').innerHTML = 'X WINS' : document.getElementById('msgArea').innerHTML = 'O WINS'
+            lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
         };
         lineSum = boardState[2][0] + boardState[2][1] + boardState[2][2];
         if (lineSum === 3 || lineSum === 12){
-            lineSum === 3 ? document.getElementById('msgArea').innerHTML = 'X WINS' : document.getElementById('msgArea').innerHTML = 'O WINS'
+            lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
         };
         lineSum = boardState[0][0] + boardState[1][0] + boardState[2][0];
         if (lineSum === 3 || lineSum === 12){
-            lineSum === 3 ? document.getElementById('msgArea').innerHTML = 'X WINS' : document.getElementById('msgArea').innerHTML = 'O WINS'
+            lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
         };
         lineSum = boardState[0][1] + boardState[1][1] + boardState[2][1];
         if (lineSum === 3 || lineSum === 12){
-            lineSum === 3 ? document.getElementById('msgArea').innerHTML = 'X WINS' : document.getElementById('msgArea').innerHTML = 'O WINS'
+            lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
         };
         lineSum = boardState[0][2] + boardState[1][2] + boardState[2][2];
         if (lineSum === 3 || lineSum === 12){
-            lineSum === 3 ? document.getElementById('msgArea').innerHTML = 'X WINS' : document.getElementById('msgArea').innerHTML = 'O WINS'
+            lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
         };
         lineSum = boardState[0][0] + boardState[1][1] + boardState[2][2];
         if (lineSum === 3 || lineSum === 12){
-            lineSum === 3 ? document.getElementById('msgArea').innerHTML = 'X WINS' : document.getElementById('msgArea').innerHTML = 'O WINS'
+            lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
         };
         lineSum = boardState[0][2] + boardState[1][1] + boardState[2][0];
         if (lineSum === 3 || lineSum === 12){
-            lineSum === 3 ? document.getElementById('msgArea').innerHTML = 'X WINS' : document.getElementById('msgArea').innerHTML = 'O WINS'
+            lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
         };
-
-        if (document.getElementById('msgArea').innerHTML === 'X WINS' || document.getElementById('msgArea').innerHTML === 'O WINS'){
-                this.setState({ gameOver: true });
-        }else{
-            //check if board is full but no one has won
-            // if (this.state.turn >= 10) {
-            //     console.log ("we're in the no win condition")
-            //     this.setState ({ msgArea: 'Nobody wins!', gameOver: true });
-            // }
+        //check the no win condition
+        if (this.state.turn >= 10) {
+            this.setState ({ msgArea: 'Nobody wins!', gameOver: true });
         }
-        //this.setState({bState: [...boardState]});
-        console.log ('')
     }
 
     handleReset (e) {
-        this.state = this.initialState();
-        this.setState();
-        console.log(this.state.bState);
-        console.log(this.state.gameOver);
-        console.log(this.state.msgArea);
+        this.setState(this.resetState());
+        console.log(this.state);
     }
 
   
     render() {
         return (
             <div>
-                <h1>{this.state.header}</h1>
+                <h1>Reac-Tac-Toe</h1>
                 <table>
                 <tr>
                     <td id='00' onClick={e => this.handleClick(e)}></td>
@@ -122,10 +117,12 @@ class Board extends React.Component {
                     <td id='22' onClick={e => this.handleClick(e)}></td>
                 </tr>
                 </table>
-                <h1 id='msgArea'>{this.state.turn % 2 != 0 ? "X's" : "O's"} turn</h1>
-                <button onClick={e => this.handleReset(e)}>Reset Game</button>
+                <h1 id='msgArea'>{this.state.msgArea}</h1>
+                <div id='thebutton'>
+                    <button id='alsobutton' onClick={e => this.handleReset(e)}>Reset Game</button>
+                </div>
                 <br /><br />
-                <h2>Test Area</h2>
+                <h2>Debugging Area</h2>
                 <h3>Board State</h3>
                 {this.state.bState}
                 <h3>Turn</h3>

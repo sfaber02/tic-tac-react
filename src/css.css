@@ -21,7 +21,15 @@ h1 {
     border-bottom: 2px solid black;
   }
 
-  button {
+  #thebutton {
     text-align: center;
+  }
 
+  /* #root {
+    background-image: url('../background.png');
+  } */
+
+  #alsobutton {
+    background-color: black;
+    color: white;
   }
