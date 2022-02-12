@@ -1,7 +1,8 @@
 import React from "react";
 
 //BABY'S FIRST REACT PROJECT
-
+//credit to Shady-Salem on codepen for the skeleton and basic css styling of the board
+// https://codepen.io/xunnn/pen/yEmMbm
 
 
 class Board extends React.Component {
