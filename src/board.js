@@ -4,6 +4,11 @@ import React from "react";
 //credit to Shady-Salem on codepen for the skeleton and basic css styling of the board
 // https://codepen.io/xunnn/pen/yEmMbm
 
+//TODO:
+//colors!
+//get rid of that tiny white board on center cell!!
+
+
 
 class Board extends React.Component {
     constructor(props){
@@ -61,34 +66,42 @@ class Board extends React.Component {
         let lineSum = boardState[0][0] + boardState[0][1] + boardState[0][2];
         if (lineSum === 3 || lineSum === 12){
             lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
+            return;
         };
         lineSum = boardState[1][0] + boardState[1][1] + boardState[1][2];
         if (lineSum === 3 || lineSum === 12){
             lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
+            return;
         };
         lineSum = boardState[2][0] + boardState[2][1] + boardState[2][2];
         if (lineSum === 3 || lineSum === 12){
             lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
+            return;
         };
         lineSum = boardState[0][0] + boardState[1][0] + boardState[2][0];
         if (lineSum === 3 || lineSum === 12){
             lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
+            return;
         };
         lineSum = boardState[0][1] + boardState[1][1] + boardState[2][1];
         if (lineSum === 3 || lineSum === 12){
             lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
+            return;
         };
         lineSum = boardState[0][2] + boardState[1][2] + boardState[2][2];
         if (lineSum === 3 || lineSum === 12){
             lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
+            return;
         };
         lineSum = boardState[0][0] + boardState[1][1] + boardState[2][2];
         if (lineSum === 3 || lineSum === 12){
             lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
+            return;
         };
         lineSum = boardState[0][2] + boardState[1][1] + boardState[2][0];
         if (lineSum === 3 || lineSum === 12){
             lineSum === 3 ? this.setState({msgArea: 'X WINS', gameOver: true}) : this.setState({msgArea: 'O WINS', gameOver: true});
+            return;
         };
         //check the no win condition
         if (this.state.turn >= 10) {
@@ -106,7 +119,7 @@ class Board extends React.Component {
         return (
             <div>
                 <h1>Reac-Tac-Toe</h1>
-                <table>
+                <table id="table">
                 <tr>
                     <td id='00' onClick={e => this.handleClick(e)}></td>
                     <td class="vert" id='01' onClick={e => this.handleClick(e)}></td>
