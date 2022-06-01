@@ -177,6 +177,7 @@ const Board = () => {
 };
 
 export default Board;
+
 // // class Board extends React.Component {
 // //   //fuck off, constructor.
 // //   constructor(props) {
