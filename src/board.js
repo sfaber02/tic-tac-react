@@ -44,6 +44,30 @@ const Board = () => {
           gameOver: false,
         };
       }
+
+      const handleClick = (e) => {
+        if (!gameOver) {
+          let x = e.target.id.slice(0, 1);
+          let y = e.target.id.slice(1);
+          let xo;
+          let boardState = [...bState];
+          if (boardState[x][y] == 0) {
+            xo = turn % 2 == 0 ? [4, "O"] : [1, "X"];
+            setTurn(turn++); //not sure on this
+            let turnString = turn % 2 ? "X's turn" : "O's turn";
+            //this.setState({ msgArea: turnString });
+            setmsgArea(turnString)
+            document.getElementById(e.target.id).innerHTML = xo[1];
+            boardState[x][y] = xo[0];
+            //this.setState({ bState: [...boardState] });
+            setbState([...boardState])
+          }
+          //this.setState({ bState: [...boardState] });
+          setbState([...boardState])
+          //this.checkWin();
+          checkWin();
+        }
+      }
 };
 
 export default Board
