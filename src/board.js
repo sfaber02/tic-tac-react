@@ -68,6 +68,73 @@ const Board = () => {
           checkWin();
         }
       }
+
+      const checkWin = () => {
+        //there are 16 possible win conditons 8 for X, 8 for O
+        //an x = 1 and o = 4.  therefore a win for x is a row/col/diag that sums 3 and a sum of 12 for O
+        let boardState = [...bState];
+        let lineSum = boardState[0][0] + boardState[0][1] + boardState[0][2];
+        if (lineSum === 3 || lineSum === 12) {
+          lineSum === 3
+            ? ((setmsgArea("X WINS")) (setGameOver(true))) 
+            : ((setmsgArea("O WINS")) (setGameOver(true))) 
+          return;
+        }
+        lineSum = boardState[1][0] + boardState[1][1] + boardState[1][2];
+        if (lineSum === 3 || lineSum === 12) {
+          lineSum === 3
+          ? ((setmsgArea("X WINS")) (setGameOver(true))) 
+          : ((setmsgArea("O WINS")) (setGameOver(true))) 
+          return;
+        }
+        lineSum = boardState[2][0] + boardState[2][1] + boardState[2][2];
+        if (lineSum === 3 || lineSum === 12) {
+          lineSum === 3
+          ? ((setmsgArea("X WINS")) (setGameOver(true))) 
+          : ((setmsgArea("O WINS")) (setGameOver(true))) 
+          return;
+        }
+        lineSum = boardState[0][0] + boardState[1][0] + boardState[2][0];
+        if (lineSum === 3 || lineSum === 12) {
+          lineSum === 3
+          ? ((setmsgArea("X WINS")) (setGameOver(true))) 
+          : ((setmsgArea("O WINS")) (setGameOver(true))) 
+          return;
+        }
+        lineSum = boardState[0][1] + boardState[1][1] + boardState[2][1];
+        if (lineSum === 3 || lineSum === 12) {
+          lineSum === 3
+          ? ((setmsgArea("X WINS")) (setGameOver(true))) 
+          : ((setmsgArea("O WINS")) (setGameOver(true))) 
+          return;
+        }
+        lineSum = boardState[0][2] + boardState[1][2] + boardState[2][2];
+        if (lineSum === 3 || lineSum === 12) {
+          lineSum === 3
+          ? ((setmsgArea("X WINS")) (setGameOver(true))) 
+          : ((setmsgArea("O WINS")) (setGameOver(true))) 
+          return;
+        }
+        lineSum = boardState[0][0] + boardState[1][1] + boardState[2][2];
+        if (lineSum === 3 || lineSum === 12) {
+          lineSum === 3
+          ? ((setmsgArea("X WINS")) (setGameOver(true))) 
+          : ((setmsgArea("O WINS")) (setGameOver(true))) 
+          return;
+        }
+        lineSum = boardState[0][2] + boardState[1][1] + boardState[2][0];
+        if (lineSum === 3 || lineSum === 12) {
+          lineSum === 3
+          ? ((setmsgArea("X WINS")) (setGameOver(true))) 
+          : ((setmsgArea("O WINS")) (setGameOver(true))) 
+          return;
+        }
+        //check the no win condition
+        if (turn >= 10) {
+          //this.setState({ msgArea: "Nobody wins!", gameOver: true });
+          ((setmsgArea("Nobody wins!")) (setGameOver(true)))
+        }
+      }
 };
 
 export default Board
@@ -108,25 +175,25 @@ export default Board
 //     };
 //   }
   //make this a function
-  handleClick(e) {
-    if (!this.state.gameOver) {
-      let x = e.target.id.slice(0, 1);
-      let y = e.target.id.slice(1);
-      let xo;
-      let boardState = [...this.state.bState];
-      if (boardState[x][y] == 0) {
-        xo = this.state.turn % 2 == 0 ? [4, "O"] : [1, "X"];
-        this.state.turn++;
-        let turnString = this.state.turn % 2 ? "X's turn" : "O's turn";
-        this.setState({ msgArea: turnString });
-        document.getElementById(e.target.id).innerHTML = xo[1];
-        boardState[x][y] = xo[0];
-        this.setState({ bState: [...boardState] });
-      }
-      this.setState({ bState: [...boardState] });
-      this.checkWin();
-    }
-  }
+//   handleClick(e) {
+//     if (!this.state.gameOver) {
+//       let x = e.target.id.slice(0, 1);
+//       let y = e.target.id.slice(1);
+//       let xo;
+//       let boardState = [...this.state.bState];
+//       if (boardState[x][y] == 0) {
+//         xo = this.state.turn % 2 == 0 ? [4, "O"] : [1, "X"];
+//         this.state.turn++;
+//         let turnString = this.state.turn % 2 ? "X's turn" : "O's turn";
+//         this.setState({ msgArea: turnString });
+//         document.getElementById(e.target.id).innerHTML = xo[1];
+//         boardState[x][y] = xo[0];
+//         this.setState({ bState: [...boardState] });
+//       }
+//       this.setState({ bState: [...boardState] });
+//       this.checkWin();
+//     }
+//   }
 
   //make this a function and... oh god... re-write all the this.setState uses
   checkWin() {
