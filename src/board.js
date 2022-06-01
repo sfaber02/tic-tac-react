@@ -27,7 +27,7 @@ const Board = () => {
       }
     }
     setbState([...initialBoard]);
-  });
+  },[]);
 
   const resetState = () => {
     let boardState = [];
@@ -38,12 +38,18 @@ const Board = () => {
         document.getElementById(`${row}${column}`).innerHTML = "";
       }
     }
-    return {
-      turn: 1,
-      bState: [...boardState],
-      msgArea: "X's turn",
-      gameOver: false,
-    };
+    return (
+        setTurn(1),
+        setbState([...boardState]),
+        setmsgArea("X's turn"),
+        setGameOver(false)
+    )
+    // return {
+    //   seturn: 1,
+    //   bState: [...boardState],
+    //   msgArea: "X's turn",
+    //   gameOver: false,
+    // };
   };
 
   const handleClick = (e) => {
@@ -52,9 +58,9 @@ const Board = () => {
       let y = e.target.id.slice(1);
       let xo;
       let boardState = [...bState];
-      if (boardState[x][y] == 0) {
-        xo = turn % 2 == 0 ? [4, "O"] : [1, "X"];
-        setTurn(turn+1); //not sure on this
+      if (boardState[x][y] === 0) {
+        xo = turn % 2 === 0 ? [4, "O"] : [1, "X"];
+        setTurn(prevTurn => {prevTurn++}); //not sure on this
         let turnString = turn % 2 ? "X's turn" : "O's turn";
         //this.setState({ msgArea: turnString });
         setmsgArea(turnString);
