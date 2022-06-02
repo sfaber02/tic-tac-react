@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 //BABY'S FIRST REACT PROJECT
 //credit to Shady-Salem on codepen for the skeleton and basic css styling of the board
@@ -12,10 +12,14 @@ import { useState, useEffect } from "react"
 //refactor as a function
 
 const Board = () => {
-  const [turn, setTurn] = useState(1);
+  //const [turn, setTurn] = useState(1);
   const [bState, setbState] = useState([]);
   const [msgArea, setmsgArea] = useState("X's turn");
   const [gameOver, setGameOver] = useState(false);
+
+  const cTurn = useRef(1);
+
+
 
   useEffect(() => {
     //used as onLoad
@@ -39,7 +43,7 @@ const Board = () => {
       }
     }
     return (
-      setTurn(1),
+      cTurn.current = 1,
       setbState([...boardState]),
       setmsgArea("X's turn"),
       setGameOver(false)
@@ -59,11 +63,10 @@ const Board = () => {
       let xo;
       let boardState = [...bState];
       if (boardState[x][y] === 0) {
-        xo = turn % 2 === 0 ? [4, "O"] : [1, "X"];
-        setTurn((prevTurn) => {
-          prevTurn++;
-        }); //not sure on this
-        let turnString = turn % 2 ? "X's turn" : "O's turn";
+        xo = cTurn.current % 2 === 0 ? [4, "O"] : [1, "X"];
+        cTurn.current ++;
+        //setTurn((prevTurn) => prevTurn++); //not sure on this
+        let turnString = cTurn.current % 2 ? "X's turn" : "O's turn";
         //this.setState({ msgArea: turnString });
         setmsgArea(turnString);
         document.getElementById(e.target.id).innerHTML = xo[1];
@@ -139,7 +142,7 @@ const Board = () => {
       return;
     }
     //check the no win condition
-    if (turn >= 10) {
+    if (cTurn.current >= 10) {
       //this.setState({ msgArea: "Nobody wins!", gameOver: true });
       setmsgArea("Nobody wins!")(setGameOver(true));
     }
