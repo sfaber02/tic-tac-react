@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react/cjs/react.production.min";
+import { useState, useEffect } from "react"
 
 //BABY'S FIRST REACT PROJECT
 //credit to Shady-Salem on codepen for the skeleton and basic css styling of the board
@@ -27,9 +27,9 @@ const Board = () => {
       }
     }
     setbState([...initialBoard]);
-  },[]);
+  }, []);
 
-  const resetState = () => {
+  const resetState = (e) => {
     let boardState = [];
     for (let row = 0; row <= 2; row++) {
       boardState.push([]);
@@ -39,11 +39,11 @@ const Board = () => {
       }
     }
     return (
-        setTurn(1),
-        setbState([...boardState]),
-        setmsgArea("X's turn"),
-        setGameOver(false)
-    )
+      setTurn(1),
+      setbState([...boardState]),
+      setmsgArea("X's turn"),
+      setGameOver(false)
+    );
     // return {
     //   seturn: 1,
     //   bState: [...boardState],
@@ -60,7 +60,9 @@ const Board = () => {
       let boardState = [...bState];
       if (boardState[x][y] === 0) {
         xo = turn % 2 === 0 ? [4, "O"] : [1, "X"];
-        setTurn(prevTurn => {prevTurn++}); //not sure on this
+        setTurn((prevTurn) => {
+          prevTurn++;
+        }); //not sure on this
         let turnString = turn % 2 ? "X's turn" : "O's turn";
         //this.setState({ msgArea: turnString });
         setmsgArea(turnString);
@@ -144,7 +146,7 @@ const Board = () => {
   };
   const handleReset = (e) => {
     //this.setState(this.resetState());
-    resetState();
+    resetState(e);
     //console.log(this.state);
   };
 
@@ -159,11 +161,7 @@ const Board = () => {
         </tr>
         <tr>
           <td class="hori" id="10" onClick={(e) => handleClick(e)}></td>
-          <td
-            class="vert hori"
-            id="11"
-            onClick={(e) => handleClick(e)}
-          ></td>
+          <td class="vert hori" id="11" onClick={(e) => handleClick(e)}></td>
           <td class="hori" id="12" onClick={(e) => handleClick(e)}></td>
         </tr>
         <tr>
